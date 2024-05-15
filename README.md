@@ -71,3 +71,6 @@ To install and run this project locally, follow these steps:
 
 ## Screenshot
 ![Screenshot](https://raw.githubusercontent.com/TareqAli-CS/REST-Countries-API-with-color-theme-switcher/master/screenshot.png)
+
+## Live Demo
+Check out the live demo [here](https://rest-countries-api-with-color-theme-47x8.onrender.com/)
