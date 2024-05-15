@@ -6,9 +6,10 @@ import {
   getCountryByName,
   getCountryByRegion,
 } from "../Data/endPoints";
+import { useCountryContext } from "../Providers/CountryProvider"; // Import the context
 
 export default function Countries({ searchQuery, selectedRegion }) {
-  const [countries, setCountries] = useState([]);
+  const { countries, setCountries } = useCountryContext(); // Use the context
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
@@ -36,16 +37,13 @@ export default function Countries({ searchQuery, selectedRegion }) {
       }
     }
 
-    fetchData();
-  }, [searchQuery, selectedRegion]);
+    if (countries.length === 0 || searchQuery || selectedRegion) {
+      fetchData();
+    }
+  }, [searchQuery, selectedRegion, setCountries, countries.length]);
 
   return (
-    <Grid
-      container
-      spacing={2}
-      // justifyContent="center"
-      // alignItems="center"
-      sx={{ minHeight: "100vh" }}>
+    <Grid container spacing={2} sx={{ minHeight: "100vh" }}>
       {isLoading && <p>Loading...</p>}
       {!isLoading &&
         countries.map((country) => (

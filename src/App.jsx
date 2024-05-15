@@ -1,10 +1,11 @@
-import { Box, Button, ThemeProvider, createTheme } from "@mui/material";
+import { Box, ThemeProvider } from "@mui/material";
 import React from "react";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import Home from "./Pages/Home";
 import Root from "./routes/Root";
 import { useThemeContext } from "./Providers/DarkModeProvider";
 import CountryProfile from "./Pages/CountryProfile";
+import { CountryProvider } from "./Providers/CountryProvider"; // Import the CountryProvider
 
 const router = createBrowserRouter([
   {
@@ -27,7 +28,7 @@ function App() {
   const { darkTheme } = useThemeContext();
 
   return (
-    <>
+    <CountryProvider>
       <ThemeProvider theme={darkTheme}>
         <Box
           sx={{
@@ -37,7 +38,7 @@ function App() {
           <RouterProvider router={router} />
         </Box>
       </ThemeProvider>
-    </>
+    </CountryProvider>
   );
 }
 
