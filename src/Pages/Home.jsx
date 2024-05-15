@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import {
   TextField,
   InputAdornment,
@@ -11,19 +11,20 @@ import {
 import SearchIcon from "@mui/icons-material/Search";
 import { ArrayOfRegions } from "../Data/constant";
 import Countries from "../Components/Countries";
+import { useCountryContext } from "../Providers/CountryProvider"; // Import the context
 
 export default function Home() {
-  const [searchQuery, setSearchQuery] = useState("");
-  const [selectedRegion, setSelectedRegion] = useState("");
+  const { searchQuery, setSearchQuery, selectedRegion, setSelectedRegion } =
+    useCountryContext(); // Use the context
   const regions = ArrayOfRegions;
 
   const handleSearchChange = (e) => {
     const value = e.target.value;
-    if (value.length >= 3) {
-      setSearchQuery(value);
-    } else {
-      setSearchQuery("");
-    }
+    setSearchQuery(value); // Update search query
+  };
+
+  const handleRegionChange = (e) => {
+    setSelectedRegion(e.target.value); // Update selected region
   };
 
   return (
@@ -43,8 +44,8 @@ export default function Home() {
           variant="outlined"
           placeholder="Search..."
           color="primary"
-          defaultValue={searchQuery}
-          onChange={handleSearchChange}
+          value={searchQuery} // Use value from context
+          onChange={handleSearchChange} // Update context state
           InputProps={{
             startAdornment: (
               <InputAdornment position="start">
@@ -58,11 +59,10 @@ export default function Home() {
           <Select
             labelId="region"
             id="region"
-            value={selectedRegion}
+            value={selectedRegion} // Use value from context
             label="region"
-            onChange={(e) => {
-              setSelectedRegion(e.target.value);
-            }}>
+            onChange={handleRegionChange} // Update context state
+          >
             {regions.map((region, index) => (
               <MenuItem key={index} value={region}>
                 {region}
@@ -71,7 +71,7 @@ export default function Home() {
           </Select>
         </FormControl>
       </Stack>
-      <Countries searchQuery={searchQuery} selectedRegion={selectedRegion} />
+      <Countries />
     </Stack>
   );
 }

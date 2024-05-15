@@ -4,9 +4,19 @@ const CountryContext = createContext();
 
 export function CountryProvider({ children }) {
   const [countries, setCountries] = useState([]);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [selectedRegion, setSelectedRegion] = useState("");
 
   return (
-    <CountryContext.Provider value={{ countries, setCountries }}>
+    <CountryContext.Provider
+      value={{
+        countries,
+        setCountries,
+        searchQuery,
+        setSearchQuery,
+        selectedRegion,
+        setSelectedRegion,
+      }}>
       {children}
     </CountryContext.Provider>
   );

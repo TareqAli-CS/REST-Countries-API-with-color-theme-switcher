@@ -8,8 +8,9 @@ import {
 } from "../Data/endPoints";
 import { useCountryContext } from "../Providers/CountryProvider"; // Import the context
 
-export default function Countries({ searchQuery, selectedRegion }) {
-  const { countries, setCountries } = useCountryContext(); // Use the context
+export default function Countries() {
+  const { countries, setCountries, searchQuery, selectedRegion } =
+    useCountryContext(); // Use the context
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
@@ -18,10 +19,11 @@ export default function Countries({ searchQuery, selectedRegion }) {
       try {
         let url = getAllCountries;
 
-        if (searchQuery) {
+        if (searchQuery && searchQuery.length >= 3) {
           url = `${getCountryByName}/${searchQuery}`;
         } else if (selectedRegion) {
-          url = `${getCountryByRegion}/${selectedRegion}`;
+          if (selectedRegion === "All") url = getAllCountries;
+          else url = `${getCountryByRegion}/${selectedRegion}`;
         }
 
         const response = await fetch(url);
